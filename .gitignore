@@ -10,6 +10,12 @@
 !.yarn/releases
 !.yarn/versions
 
+echo node_modules/ > .gitignore
+echo .next/ >> .gitignore
+echo .env >> .gitignore
+echo package-lock.json >> .gitignore
+
+
 # testing
 /coverage
 
