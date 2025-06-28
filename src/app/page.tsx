@@ -4,9 +4,6 @@ import { Button } from '@/components/ui/button';
 import {
   Card,
   CardContent,
-  CardHeader,
-  CardTitle,
-  CardDescription,
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
@@ -25,8 +22,6 @@ import {
   GraduationCap,
   Briefcase,
   Database,
-  Code,
-  Server,
   Brain,
   FolderGit,
   BadgeCheck,
@@ -34,15 +29,8 @@ import {
   FileSearch,
   Users,
   Linkedin,
-  BookOpen,
   BarChart2,
-  Cpu,
-  DatabaseZap,
-  FlaskConical,
-  Network,
-  GitBranch,
-  Cloud,
-  LayoutTemplate
+  DatabaseZap
 } from 'lucide-react';
 
 export default function LandingPage() {
@@ -273,7 +261,7 @@ export default function LandingPage() {
               Master Data Careers<br />with Real Projects
             </h1>
             <p className='text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed'>
-              Transform into a data professional in 3 months with Innoflexus's practical program.
+              Transform into a data professional in 3 months with Innoflexus&apos;s practical program.
               First month common foundation, then specialize in Data Science, Analytics or Engineering.
             </p>
 
@@ -308,7 +296,7 @@ export default function LandingPage() {
             Why Choose Innoflexus Training?
           </h2>
           <p className='text-lg text-gray-400 max-w-2xl mx-auto'>
-            We train you on actual projects we're building for our clients, not just academic exercises.
+            We train you on actual projects we&apos;re building for our clients, not just academic exercises.
           </p>
         </motion.div>
         
@@ -438,7 +426,7 @@ export default function LandingPage() {
             className='max-w-4xl mx-auto text-center mb-16'
           >
             <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-purple-300">
-              What You'll Graduate With
+              What You&apos;ll Graduate With
             </h2>
             <p className="text-lg text-gray-400 max-w-2xl mx-auto">
               Concrete assets to showcase to employers
@@ -493,8 +481,8 @@ export default function LandingPage() {
                 <h3 className='text-2xl font-bold text-white mb-2'>Shankar Reddy</h3>
                 <p className='text-cyan-400 mb-4'>Co-founder & Chief Instructor, Innoflexus Solutions</p>
                 <p className='text-gray-300 mb-4'>
-                  With over 8 years of hands-on experience building data solutions for businesses, 
-                  I'll train you on the exact skills we use daily at Innoflexus to deliver digital 
+                  With over 5 years of hands-on experience building data solutions for businesses, 
+                  I&apos;ll train you on the exact skills we use daily at Innoflexus to deliver digital 
                   transformation for our clients.
                 </p>
  
@@ -692,7 +680,7 @@ export default function LandingPage() {
                           Application Received!
                         </h3>
                         <p className='text-gray-400 mb-6'>
-                          We'll review your application and get back to you within 24 hours.
+                          We&apos;ll review your application and get back to you within 24 hours.
                           Check your email for next steps.
                         </p>
                         <Button
