@@ -10,7 +10,12 @@ import {
 } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
-import { Calendar } from '@/components/ui/calendar';
+import {
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger,
+} from '@/components/ui/accordion';
 import { motion, AnimatePresence } from 'framer-motion';
 import {
   Check,
@@ -22,28 +27,44 @@ import {
   Database,
   Code,
   Server,
+  Brain,
+  FolderGit,
+  BadgeCheck,
+  Mic,
+  FileSearch,
+  Users,
+  Linkedin,
+  BookOpen,
+  BarChart2,
+  Cpu,
+  DatabaseZap,
+  FlaskConical,
+  Network,
+  GitBranch,
+  Cloud,
+  LayoutTemplate
 } from 'lucide-react';
 
 export default function LandingPage() {
-  const [date, setDate] = useState<Date | undefined>(new Date());
   const [submitted, setSubmitted] = useState(false);
   const [formData, setFormData] = useState({
     name: '',
     email: '',
     phone: '',
     background: '',
+    track: ''
   });
 
   const handleChange = (
-    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>
+    e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>
   ) => {
     const { name, value } = e.target;
     setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-  e.preventDefault();
-  
+    e.preventDefault();
+    
     const formUrl = 'https://docs.google.com/forms/d/e/1mxDg0OPyx-wiKqQE6_E0cZZgtkPJUqBsobV8x30IYE8/formResponse';
 
     const formDataToSend = new FormData();
@@ -51,7 +72,7 @@ export default function LandingPage() {
     formDataToSend.append('entry.896222564', formData.email);       // Email
     formDataToSend.append('entry.2122394806', formData.phone);      // Phone
     formDataToSend.append('entry.432900038', formData.background);  // Background
-    formDataToSend.append('entry.2057984392', date?.toLocaleDateString() || ''); // Date
+    formDataToSend.append('entry.2057984392', formData.track);      // Track
 
     try {
       await fetch(formUrl, {
@@ -84,39 +105,133 @@ export default function LandingPage() {
     },
   ];
 
-  const specializations = [
+  const tracks = [
     {
-      icon: <Database className='w-8 h-8 text-cyan-400' />,
+      color: 'bg-blue-500/10 border-blue-400/30',
+      icon: <Brain className='w-8 h-8 text-blue-400' />,
       title: 'Data Science',
-      description: 'Master ML models, statistical analysis, and data visualization',
+      highlights: ['Machine Learning', 'AI Applications', 'Model Evaluation']
     },
     {
-      icon: <Code className='w-8 h-8 text-purple-400' />,
+      color: 'bg-purple-500/10 border-purple-400/30',
+      icon: <BarChart2 className='w-8 h-8 text-purple-400' />,
       title: 'Data Analytics',
-      description: 'Excel in BI tools, SQL, and business insights generation',
+      highlights: ['Business Intelligence', 'Data Storytelling', 'Dashboarding']
     },
     {
-      icon: <Server className='w-8 h-8 text-pink-400' />,
+      color: 'bg-green-500/10 border-green-400/30',
+      icon: <DatabaseZap className='w-8 h-8 text-green-400' />,
       title: 'Data Engineering',
-      description: 'Learn data pipelines, ETL, and cloud infrastructure',
+      highlights: ['Cloud Platforms', 'ETL Pipelines', 'Data Warehousing']
+    }
+  ];
+
+  const curriculum = [
+    {
+      phase: 'Core Foundation',
+      weeks: 'Weeks 1-4',
+      color: 'bg-blue-500/10 text-blue-400',
+      items: [
+        {
+          week: 1,
+          title: 'Python Fundamentals',
+          topics: ['Python syntax', 'Data structures', 'Jupyter Notebooks']
+        },
+        {
+          week: 2,
+          title: 'Pandas & NumPy',
+          topics: ['Data manipulation', 'Data cleaning', 'CSV/Excel handling']
+        },
+        {
+          week: 3,
+          title: 'Data Visualization',
+          topics: ['Matplotlib/Seaborn', 'Chart types', 'Data storytelling']
+        },
+        {
+          week: 4,
+          title: 'SQL + Git + Project',
+          topics: ['SQL queries', 'Version control', 'Capstone project']
+        }
+      ]
     },
+    {
+      phase: 'Intermediate + Projects',
+      weeks: 'Weeks 5-8',
+      color: 'bg-yellow-500/10 text-yellow-400',
+      items: [
+        {
+          week: 5,
+          title: 'APIs & Web Scraping',
+          topics: ['REST APIs', 'BeautifulSoup', 'Live data dashboard']
+        },
+        {
+          week: 6,
+          title: 'Statistics for Data',
+          topics: ['Hypothesis testing', 'Probability', 'Statistical tests']
+        },
+        {
+          week: 7,
+          title: 'Data Modeling',
+          topics: ['ETL workflows', 'Data pipelines', 'Airflow basics']
+        },
+        {
+          week: 8,
+          title: 'Group Project',
+          topics: ['Kaggle challenge', 'EDA', 'Team presentation']
+        }
+      ]
+    },
+    {
+      phase: 'Specialization',
+      weeks: 'Weeks 9-12',
+      color: 'bg-green-500/10 text-green-400',
+      items: [
+        {
+          week: 9,
+          title: 'Track-Specific Start',
+          topics: ['ML basics (DS)', 'BI tools (DA)', 'Cloud basics (DE)']
+        },
+        {
+          week: 10,
+          title: 'Advanced Concepts',
+          topics: ['Feature engineering (DS)', 'A/B testing (DA)', 'DBT (DE)']
+        },
+        {
+          week: 11,
+          title: 'Capstone Project',
+          topics: ['End-to-end project', 'Real-world dataset', 'Full pipeline']
+        },
+        {
+          week: 12,
+          title: 'Career Prep',
+          topics: ['Resume building', 'Mock interviews', 'Portfolio review']
+        }
+      ]
+    }
   ];
 
   const testimonials = [
     {
-      quote:
-        'The practical approach at Innoflexus helped me transition from support to a data analyst role in just 3 months.',
+      track: 'Data Science',
+      quote: 'The ML project helped me get my first DS role at a startup immediately after completing the program.',
       name: 'Aishwarya',
       location: 'Pune',
       rating: 5,
     },
     {
-      quote:
-        'Learning from actual projects Shankar sir was building gave me confidence to handle real-world data challenges.',
-      name: 'Nikhil',
-      location: 'Hyderabad',
+      track: 'Data Analytics',
+      quote: 'I transitioned from marketing to data analyst thanks to the business case studies and Tableau training.',
+      name: 'Rahul',
+      location: 'Bangalore',
       rating: 5,
     },
+    {
+      track: 'Data Engineering',
+      quote: 'The cloud and DBT training was exactly what hiring managers were looking for in DE roles.',
+      name: 'Priya',
+      location: 'Hyderabad',
+      rating: 5,
+    }
   ];
 
   return (
@@ -158,10 +273,9 @@ export default function LandingPage() {
               Master Data Careers<br />with Real Projects
             </h1>
             <p className='text-lg md:text-xl text-gray-300 mb-8 max-w-2xl mx-auto leading-relaxed'>
-              Transform into a data professional in 3 months with Innoflexus&rsquo;s practical program.
+              Transform into a data professional in 3 months with Innoflexus's practical program.
               First month common foundation, then specialize in Data Science, Analytics or Engineering.
             </p>
-
 
             <motion.div 
               whileHover={{ scale: 1.02 }} 
@@ -171,6 +285,7 @@ export default function LandingPage() {
               <Button 
                 size='lg'
                 className='text-lg bg-gradient-to-r from-cyan-500 to-purple-500 hover:from-cyan-600 hover:to-purple-600 shadow-lg shadow-cyan-500/20'
+                onClick={() => document.getElementById('apply-section')?.scrollIntoView({ behavior: 'smooth' })}
               >
                 Enroll Now
                 <ChevronRight className='w-4 h-4 ml-2' />
@@ -193,9 +308,8 @@ export default function LandingPage() {
             Why Choose Innoflexus Training?
           </h2>
           <p className='text-lg text-gray-400 max-w-2xl mx-auto'>
-            We train you on actual projects we&rsquo;re building for our clients, not just academic exercises.
+            We train you on actual projects we're building for our clients, not just academic exercises.
           </p>
-
         </motion.div>
         
         <div className='grid md:grid-cols-3 gap-8'>
@@ -225,80 +339,132 @@ export default function LandingPage() {
       {/* Program Structure Section */}
       <section className='bg-gradient-to-br from-gray-900/80 to-purple-900/20 py-16 md:py-24 border-t border-b border-cyan-400/10 relative z-10'>
         <div className='container mx-auto px-4'>
-          <div className='max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center'>
-            <motion.div
-              initial={{ opacity: 0, x: -40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-            >
-              <h2 className='text-3xl font-bold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-purple-300'>
-                Our 3-Month Intensive Program
-              </h2>
-              <ul className='space-y-4'>
-                {[
-                  'Month 1: Common foundation for all students',
-                  'Months 2-3: Specialized tracks based on your career goals',
-                  'Daily live sessions with Shankar Reddy',
-                  'Hands-on projects from Innoflexus client work',
-                  'Lifetime access to course materials and community',
-                ].map((text, idx) => (
-                  <motion.li 
-                    key={idx}
-                    initial={{ opacity: 0, x: -20 }}
-                    whileInView={{ opacity: 1, x: 0 }}
-                    transition={{ delay: idx * 0.1 + 0.3 }}
-                    className='flex items-start group'
-                  >
-                    <div className='flex items-center justify-center p-1 bg-cyan-500/10 rounded-full mr-3 group-hover:bg-cyan-500/20 transition-all'>
-                      <Check className='w-4 h-4 text-cyan-400' />
-                    </div>
-                    <span className='text-gray-300 group-hover:text-white transition-colors'>{text}</span>
-                  </motion.li>
-                ))}
-              </ul>
-            </motion.div>
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className='max-w-4xl mx-auto text-center mb-16'
+          >
+            <h2 className='text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-purple-300'>
+              Our 3-Month Intensive Program
+            </h2>
+            <p className='text-lg text-gray-400 max-w-2xl mx-auto'>
+              Structured learning path with increasing specialization
+            </p>
+          </motion.div>
 
-            <motion.div
-              initial={{ opacity: 0, x: 40 }}
-              whileInView={{ opacity: 1, x: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className='relative'
-            >
-              <div className='absolute -inset-4 bg-cyan-500/10 rounded-xl blur-lg' />
-              <Card className='relative bg-gray-900/80 backdrop-blur-sm border border-gray-800/50 shadow-2xl'>
-                <CardHeader>
-                  <CardTitle className='text-2xl text-white'>Specialization Tracks</CardTitle>
-                  <CardDescription className='text-cyan-300'>
-                    Choose your path after Month 1
-                  </CardDescription>
-                </CardHeader>
-                <CardContent>
-                  <div className='space-y-6'>
-                    {specializations.map((spec, idx) => (
-                      <div key={idx} className='relative pl-6 group'>
-                        <div className='absolute left-0 top-1 w-3 h-3 rounded-full bg-cyan-400 group-hover:animate-pulse' />
-                        <div className='flex items-start'>
-                          <div className='mr-4 mt-1'>
-                            {spec.icon}
-                          </div>
-                          <div>
-                            <h4 className='font-medium text-white mb-1 group-hover:text-cyan-300 transition-colors'>
-                              {spec.title}
-                            </h4>
-                            <p className='text-sm text-gray-400 group-hover:text-gray-300 transition-colors'>
-                              {spec.description}
-                            </p>
-                          </div>
-                        </div>
-                        <div className='absolute left-[5px] top-4 bottom-0 w-0.5 bg-gradient-to-b from-cyan-400/50 to-transparent' />
+          <div className='grid md:grid-cols-3 gap-6 mb-16'>
+            {tracks.map((track, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                whileHover={{ scale: 1.02 }}
+              >
+                <Card className={`${track.color} border h-full backdrop-blur-sm`}>
+                  <CardContent className='p-6'>
+                    <div className='flex justify-center mb-4'>
+                      <div className='p-3 rounded-full bg-gray-900/50'>
+                        {track.icon}
                       </div>
-                    ))}
-                  </div>
-                </CardContent>
-              </Card>
-            </motion.div>
+                    </div>
+                    <h3 className='text-xl font-semibold text-center mb-3 text-white'>{track.title}</h3>
+                    <ul className='space-y-2'>
+                      {track.highlights.map((highlight, hi) => (
+                        <li key={hi} className='flex items-center'>
+                          <Check className='w-4 h-4 mr-2 text-green-400' />
+                          <span className='text-gray-300'>{highlight}</span>
+                        </li>
+                      ))}
+                    </ul>
+                  </CardContent>
+                </Card>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className='max-w-4xl mx-auto'>
+            {curriculum.map((phase, pi) => (
+              <motion.div
+                key={pi}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: pi * 0.1 }}
+                className='mb-12'
+              >
+                <div className={`flex items-center mb-6 ${phase.color}`}>
+                  <div className={`w-4 h-4 rounded-full ${phase.color.replace('text', 'bg')} mr-3`} />
+                  <h3 className='text-2xl font-bold'>{phase.phase}</h3>
+                  <span className='ml-auto text-gray-400'>{phase.weeks}</span>
+                </div>
+                
+                <Accordion type="multiple" className='space-y-2'>
+                  {phase.items.map((week, wi) => (
+                    <AccordionItem key={wi} value={`phase-${pi}-week-${wi}`} className='border border-gray-800/50 rounded-lg overflow-hidden'>
+                      <AccordionTrigger className='hover:bg-gray-800/50 px-4 py-3'>
+                        <div className='flex items-center'>
+                          <span className='font-medium mr-3'>Week {week.week}:</span>
+                          <span className='text-gray-300'>{week.title}</span>
+                        </div>
+                      </AccordionTrigger>
+                      <AccordionContent className='px-4 py-3 bg-gray-900/50'>
+                        <ul className='list-disc pl-5 space-y-1 text-gray-300'>
+                          {week.topics.map((topic, ti) => (
+                            <li key={ti}>{topic}</li>
+                          ))}
+                        </ul>
+                      </AccordionContent>
+                    </AccordionItem>
+                  ))}
+                </Accordion>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Deliverables Section */}
+      <section className="py-16 bg-gray-900/50 relative z-10">
+        <div className="container mx-auto px-4">
+          <motion.div
+            initial={{ opacity: 0 }}
+            whileInView={{ opacity: 1 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6 }}
+            className='max-w-4xl mx-auto text-center mb-16'
+          >
+            <h2 className="text-3xl md:text-4xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-cyan-300 to-purple-300">
+              What You'll Graduate With
+            </h2>
+            <p className="text-lg text-gray-400 max-w-2xl mx-auto">
+              Concrete assets to showcase to employers
+            </p>
+          </motion.div>
+          <div className="grid grid-cols-2 md:grid-cols-3 gap-4 max-w-4xl mx-auto">
+            {[
+              { icon: <FolderGit className="w-8 h-8 text-cyan-400" />, text: "3 Portfolio Projects" },
+              { icon: <BadgeCheck className="w-8 h-8 text-purple-400" />, text: "Certification" },
+              { icon: <Mic className="w-8 h-8 text-pink-400" />, text: "2 Mock Interviews" },
+              { icon: <FileSearch className="w-8 h-8 text-blue-400" />, text: "Resume Review" },
+              { icon: <Users className="w-8 h-8 text-green-400" />, text: "Live Support" },
+              { icon: <Linkedin className="w-8 h-8 text-yellow-400" />, text: "LinkedIn Optimization" }
+            ].map((item, i) => (
+              <motion.div
+                key={i}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ delay: i * 0.1 }}
+                className="flex items-center gap-3 p-4 bg-gray-800/50 rounded-lg hover:bg-gray-700/50 transition-colors"
+              >
+                <div className='flex-shrink-0'>{item.icon}</div>
+                <span className='text-gray-300'>{item.text}</span>
+              </motion.div>
+            ))}
           </div>
         </div>
       </section>
@@ -317,7 +483,6 @@ export default function LandingPage() {
               <div className='flex-shrink-0'>
                 <div className='w-32 h-32 md:w-40 md:h-40 rounded-full bg-gradient-to-br from-cyan-500/20 to-purple-500/20 p-1'>
                   <div className='w-full h-full rounded-full bg-gray-800 overflow-hidden'>
-                    {/* Placeholder for instructor image */}
                     <div className='w-full h-full bg-gray-700 flex items-center justify-center text-4xl font-bold text-cyan-400'>
                       SR
                     </div>
@@ -329,7 +494,7 @@ export default function LandingPage() {
                 <p className='text-cyan-400 mb-4'>Co-founder & Chief Instructor, Innoflexus Solutions</p>
                 <p className='text-gray-300 mb-4'>
                   With over 8 years of hands-on experience building data solutions for businesses, 
-                  I&rsquo;ll train you on the exact skills we use daily at Innoflexus to deliver digital 
+                  I'll train you on the exact skills we use daily at Innoflexus to deliver digital 
                   transformation for our clients.
                 </p>
  
@@ -361,7 +526,7 @@ export default function LandingPage() {
               Our alumni are working at top companies and startups
             </p>
           </motion.div>
-          <div className='grid md:grid-cols-2 gap-8 max-w-5xl mx-auto'>
+          <div className='grid md:grid-cols-3 gap-8 max-w-6xl mx-auto'>
             {testimonials.map((t, i) => (
               <motion.div
                 key={i}
@@ -372,6 +537,15 @@ export default function LandingPage() {
               >
                 <Card className='bg-gray-900/80 backdrop-blur-sm border border-gray-800/50 h-full hover:border-cyan-400/30 transition-all'>
                   <CardContent className='p-6'>
+                    <div className='flex items-center mb-3'>
+                      <div className={`px-2 py-1 text-xs rounded-full ${
+                        t.track === 'Data Science' ? 'bg-blue-500/10 text-blue-400' :
+                        t.track === 'Data Analytics' ? 'bg-purple-500/10 text-purple-400' :
+                        'bg-green-500/10 text-green-400'
+                      }`}>
+                        {t.track}
+                      </div>
+                    </div>
                     <div className='flex mb-4'>
                       {[...Array(5)].map((_, star) => (
                         <Star
@@ -398,7 +572,7 @@ export default function LandingPage() {
       </section>
 
       {/* Apply Section */}
-      <section className='bg-gradient-to-r from-purple-900/40 via-gray-900/80 to-cyan-900/40 py-16 md:py-24 border-t border-b border-cyan-400/10 relative z-10'>
+      <section id="apply-section" className='bg-gradient-to-r from-purple-900/40 via-gray-900/80 to-cyan-900/40 py-16 md:py-24 border-t border-b border-cyan-400/10 relative z-10'>
         <div className='container mx-auto px-4'>
           <div className='max-w-5xl mx-auto grid md:grid-cols-2 gap-12 items-center'>
             <motion.div
@@ -474,6 +648,21 @@ export default function LandingPage() {
                           className='bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-500 focus:ring-2 focus:ring-cyan-400/50'
                           required
                         />
+                        <div className="mb-4">
+                          <label className="block text-sm mb-2 text-gray-400">Preferred Track</label>
+                          <select 
+                            name="track" 
+                            value={formData.track}
+                            onChange={handleChange}
+                            className="w-full bg-gray-800/50 border border-gray-700/50 rounded-md px-3 py-2 text-white focus:ring-2 focus:ring-cyan-400/50"
+                            required
+                          >
+                            <option value="">Select a track</option>
+                            <option value="Data Science">Data Science</option>
+                            <option value="Data Analytics">Data Analytics</option>
+                            <option value="Data Engineering">Data Engineering</option>
+                          </select>
+                        </div>
                         <Textarea
                           name='background'
                           placeholder='Your background and career goals'
@@ -481,15 +670,6 @@ export default function LandingPage() {
                           onChange={handleChange}
                           className='bg-gray-800/50 border-gray-700/50 text-white placeholder-gray-500 focus:ring-2 focus:ring-cyan-400/50 min-h-[100px]'
                         />
-                        <div>
-                          <p className='text-sm mb-2 text-gray-400'>Preferred Start Date:</p>
-                          <Calendar
-                            mode='single'
-                            selected={date}
-                            onSelect={setDate}
-                            className='rounded-md border bg-gray-800/50 border-gray-700/50 text-white'
-                          />
-                        </div>
                         <Button
                           type='submit'
                           size='lg'
@@ -512,7 +692,7 @@ export default function LandingPage() {
                           Application Received!
                         </h3>
                         <p className='text-gray-400 mb-6'>
-                          We&rsquo;ll review your application and get back to you within 24 hours.
+                          We'll review your application and get back to you within 24 hours.
                           Check your email for next steps.
                         </p>
                         <Button
