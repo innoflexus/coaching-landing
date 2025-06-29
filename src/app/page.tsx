@@ -1,19 +1,16 @@
 "use client";
 import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
-import {
-  Card,
-  CardContent,
-} from '@/components/ui/card';
+import { Card, CardContent } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
+import { motion, AnimatePresence } from 'framer-motion';
 import {
   Accordion,
   AccordionContent,
   AccordionItem,
   AccordionTrigger,
 } from '@/components/ui/accordion';
-import { motion, AnimatePresence } from 'framer-motion';
 import {
   Check,
   ChevronRight,
@@ -32,6 +29,7 @@ import {
   BarChart2,
   DatabaseZap
 } from 'lucide-react';
+import emailjs from '@emailjs/browser';
 
 export default function LandingPage() {
   const [submitted, setSubmitted] = useState(false);
@@ -53,25 +51,35 @@ export default function LandingPage() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     
-    const formUrl = 'https://docs.google.com/forms/d/e/1mxDg0OPyx-wiKqQE6_E0cZZgtkPJUqBsobV8x30IYE8/formResponse';
-
-    const formDataToSend = new FormData();
-    formDataToSend.append('entry.609283002', formData.name);        // Name
-    formDataToSend.append('entry.896222564', formData.email);       // Email
-    formDataToSend.append('entry.2122394806', formData.phone);      // Phone
-    formDataToSend.append('entry.432900038', formData.background);  // Background
-    formDataToSend.append('entry.2057984392', formData.track);      // Track
-
     try {
-      await fetch(formUrl, {
-        method: 'POST',
-        mode: 'no-cors',
-        body: formDataToSend,
-      });
-
+      await emailjs.send(
+        'service_3qmp7mn', // Replace with your EmailJS Service ID
+        'template_sikaomo', // Replace with your EmailJS Template ID
+        {
+          name: formData.name,
+          email: formData.email,
+          phone: formData.phone,
+          track: formData.track,
+          background: formData.background,
+          date: new Date().toLocaleDateString(),
+          'g-recaptcha-response': '',
+          'isHtml': true
+        },
+        'DbeKEfkabMrTZCTKR' // Replace with your EmailJS User ID
+      );
+      
       setSubmitted(true);
+      setFormData({
+        name: '',
+        email: '',
+        phone: '',
+        background: '',
+        track: ''
+      });
+      
     } catch (error) {
-      console.error('Form submission error:', error);
+      console.error('Failed to send email:', error);
+      alert('Failed to submit form. Please try again later.');
     }
   };
 
@@ -481,7 +489,7 @@ export default function LandingPage() {
                 <h3 className='text-2xl font-bold text-white mb-2'>Shankar Reddy</h3>
                 <p className='text-cyan-400 mb-4'>Co-founder & Chief Instructor, Innoflexus Solutions</p>
                 <p className='text-gray-300 mb-4'>
-                  With over 5 years of hands-on experience building data solutions for businesses, 
+                  With over 8 years of hands-on experience building data solutions for businesses, 
                   I&apos;ll train you on the exact skills we use daily at Innoflexus to deliver digital 
                   transformation for our clients.
                 </p>
@@ -680,8 +688,7 @@ export default function LandingPage() {
                           Application Received!
                         </h3>
                         <p className='text-gray-400 mb-6'>
-                          We&apos;ll review your application and get back to you within 24 hours.
-                          Check your email for next steps.
+                          We&apos;ll contact you within 24 hours with next steps.
                         </p>
                         <Button
                           variant='outline'
@@ -689,7 +696,7 @@ export default function LandingPage() {
                           className='w-full text-lg border-gray-700 hover:bg-gray-800/50 hover:text-cyan-300'
                           onClick={() => setSubmitted(false)}
                         >
-                          Apply Again
+                          Submit Another Application
                         </Button>
                       </motion.div>
                     )}
